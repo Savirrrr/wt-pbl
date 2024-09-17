@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task List - To-Do List</title>
+  <link rel="stylesheet" href="task.css">
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .task-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .task-item.completed {
+      text-decoration: line-through;
+      background: #d4edda;
+    }
+    .task-info {
+      flex-grow: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .task-text {
+      flex: 1;
+    }
+    .task-date {
+      margin-left: 10px;
+      color: #6c757d;
+    }
+    .task-item .edit-button,
+    .task-item .delete-button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+    .task-item .delete-button {
+      background-color: #dc3545;
+    }
+    .task-item .edit-button:hover {
+      background-color: #0056b3;
+    }
+    .task-item .delete-button:hover {
+      background-color: #c82333;
+    }
+    .task-sort-container {
+      margin-bottom: 20px;
+    }
+    .task-sort-container select {
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Task List</h1>
+    
+    <div class="task-sort-container">
+      <label for="sort-tasks">Sort by:</label>
+      <select id="sort-tasks">
+        <option value="priority">Priority</option>
+        <option value="due-date">Due Date</option>
+      </select>
+    </div>
+    
+    <ul id="todo-list">
+      <!-- Tasks will appear here -->
+    </ul>
+    <button id="back-button">Back to Add Task</button>
+  </div>
+
+  <script>
+    // Load tasks from local storage and display them
+    function loadTasksFromLocalStorage() {
+      const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      const todoList = document.getElementById('todo-list');
+      todoList.innerHTML = ''; // Clear existing tasks
+      tasks.forEach(task => createTaskElement(task.text, task.priority, task.dueDate, task.completed));
+      sortTasks(); // Ensure tasks are sorted based on selected criteria
+    }
+
+    // Create task element with priority and due date
+    function createTaskElement(taskValue, taskPriority, taskDate, completed) {
+      const listItem = document.createElement('li');
+      listItem.classList.add('task-item');
+      if (completed) {
+        listItem.classList.add('completed');
+      }
+
+      // Assign background color based on priority
+      if (taskPriority === 'High') {
+        listItem.classList.add('priority-high');
+      } else if (taskPriority === 'Medium') {
+        listItem.classList.add('priority-medium');
+      } else {
+        listItem.classList.add('priority-low');
+      }
+
+      const taskInfo = document.createElement('div');
+      taskInfo.classList.add('task-info');
+      
+      const taskText = document.createElement('span');
+      taskText.classList.add('task-text');
+      taskText.textContent = taskValue;
+      
+      const taskDueDate = document.createElement('span');
+      taskDueDate.textContent = taskDate ? `Due: ${taskDate}` : '';
+      taskDueDate.classList.add('task-date');
+      
+      taskInfo.appendChild(taskText);
+      taskInfo.appendChild(taskDueDate);
+
+      listItem.appendChild(taskInfo);
+
+      const editButton = document.createElement('button');
+      editButton.textContent = 'Edit';
+      editButton.classList.add('edit-button');
+      listItem.appendChild(editButton);
+
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Delete';
+      deleteButton.classList.add('delete-button');
+      listItem.appendChild(deleteButton);
+
+      document.getElementById('todo-list').appendChild(listItem);
+
+      // Mark as completed when clicked
+      listItem.addEventListener('click', function() {
+        this.classList.toggle('completed');
+        updateTaskStatus(taskValue, this.classList.contains('completed'));
+      });
+
+      // Edit task when edit button is clicked
+      editButton.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent triggering the completion toggle
+        const newTaskValue = prompt('Edit task:', taskValue);
+        if (newTaskValue !== null && newTaskValue.trim() !== '') {
+          updateTask(taskValue, newTaskValue.trim());
+          taskText.textContent = newTaskValue;
+        }
+      });
+
+      // Delete task when delete button is clicked
+      deleteButton.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent triggering the completion toggle
+        listItem.remove();
+        deleteTaskFromLocalStorage(taskValue);
+      });
+    }
+
+    // Update task status in local storage
+    function updateTaskStatus(taskValue, completed) {
+      let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      tasks = tasks.map(task => {
+        if (task.text === taskValue) {
+          task.completed = completed;
+        }
+        return task;
+      });
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    // Update task in local storage
+    function updateTask(oldValue, newValue) {
+      let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      tasks = tasks.map(task => {
+        if (task.text === oldValue) {
+          task.text = newValue;
+        }
+        return task;
+      });
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    // Delete task from local storage
+    function deleteTaskFromLocalStorage(taskValue) {
+      let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      tasks = tasks.filter(task => task.text !== taskValue);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    // Sort tasks based on selected criteria
+    function sortTasks() {
+      const sortCriteria = document.getElementById('sort-tasks').value;
+      const todoList = document.getElementById('todo-list');
+      const items = Array.from(todoList.children);
+
+      items.sort((a, b) => {
+        const aPriority = a.classList.contains('priority-high') ? 3 : a.classList.contains('priority-medium') ? 2 : 1;
+        const bPriority = b.classList.contains('priority-high') ? 3 : b.classList.contains('priority-medium') ? 2 : 1;
+
+        if (sortCriteria === 'priority') {
+          return bPriority - aPriority;
+        } else if (sortCriteria === 'due-date') {
+          const aDate = a.querySelector('.task-date') ? new Date(a.querySelector('.task-date').textContent.replace('Due: ', '')) : new Date();
+          const bDate = b.querySelector('.task-date') ? new Date(b.querySelector('.task-date').textContent.replace('Due: ', '')) : new Date();
+          return aDate - bDate;
+        }
+      });
+
+      items.forEach(item => todoList.appendChild(item));
+    }
+
+    // Add event listener for sorting
+    document.getElementById('sort-tasks').addEventListener('change', sortTasks);
+
+    // Go back to the add task page
+    document.getElementById('back-button').addEventListener('click', function() {
+      window.location.href = 'tasks.html';
+    });
+
+    // Load tasks on page load
+    window.onload = loadTasksFromLocalStorage;
+  </script>
+</body>
+</html>

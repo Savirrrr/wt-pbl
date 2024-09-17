@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>To-Do List</h1>
+    <div class="welcome-message">
+      <span id="welcome-user"></span>
+      <button id="logout-button">Logout</button>
+    </div>
+    
+    <div class="inputContainer">
+      <input type="text" id="new-task" placeholder="Add a new task...">
+      <input type="date" id="task-date">
+      <select id="task-priority">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+      <button id="add-task-button">Add Task</button>
+    </div>
+    
+    <ul id="todo-list">
+      <!-- Tasks will appear here -->
+    </ul>
+  </div>
+
+  <script>
+    // Ensure user is logged in, if not, redirect to login page
+    window.onload = function() {
+      const username = localStorage.getItem('username');
+      if (!username) {
+        // Redirect to login page if not logged in
+        window.location.href = 'home.html';
+      } else {
+        // Show welcome message if logged in
+        document.getElementById('welcome-user').textContent = `Welcome, ${username}!`;
+      }
+    };
+
+    // Logout functionality
+    document.getElementById('logout-button').addEventListener('click', function() {
+      localStorage.removeItem('username'); // Clear the username
+      window.location.href = 'index.html'; // Redirect to login page
+    });
+
+    // Rest of the to-do list functionality...
+  </script>
+</body>
+</html>

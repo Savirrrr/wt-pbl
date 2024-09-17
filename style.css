@@ -1,0 +1,391 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-left: auto;
+}
+
+.nav-links li {
+    display: inline-block;
+}
+
+.nav-links li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    background-color: #575757;
+    border-radius: 5px;
+}
+
+.nav-button {
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.nav-button:hover {
+    background-color: #575757;
+}
+
+.cta-button {
+    background-color: #00a8d5;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.cta-button:hover {
+    background-color: #008bb2;
+}
+
+/* Fade-in animation */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.appear {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hero Section */
+.hero {
+    background-color: #0098c2;
+    color: #fff;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.scroll-section {
+    padding: 20px;
+    text-align: center;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.blue-button {
+    background-color: #0098c2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 5px;
+}
+
+.blue-button:hover {
+    background-color: #007ea7;
+}
+
+.fade-in-image {
+    margin-top: 20px;
+    height: 250px;
+    transition: opacity 1.2s ease-out;
+}
+
+.features-content {
+    display: flex;
+    justify-content: space-between;
+    background-color: #0098c2;
+    padding: 50px 20px;
+    color: white;
+}
+
+.feature-item {
+    width: 30%;
+    text-align: center;
+}
+
+.icon-image {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.task-details {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px 20px;
+    background-color: #ffffff;
+}
+
+.task-detail-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 60%;
+}
+
+.task-detail-item {
+    text-align: center;
+}
+
+.task-detail-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.task-detail-image {
+    width: 35%;
+    height: auto;
+}
+
+/* New Sections */
+.priority-section,
+.smart-solutions-section,
+.streamlined-management-section {
+    padding: 50px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0098c2;
+}
+
+.priority-content,
+.smart-solutions-content,
+.streamlined-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: #ffffff;
+}
+
+.priority-text,
+.smart-solutions-text,
+.streamlined-text {
+    width: 60%;
+}
+
+.priority-image,
+.smart-solutions-image,
+streamlined-image {
+    width: 35%;
+    height: auto;
+    margin-left: 20px;
+}
+
+/* Diverse Solutions Section */
+.diverse-solutions-section {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.diverse-solutions-content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+}
+
+.diverse-solutions-item {
+    width: 60%;
+    text-align: center;
+}
+
+.diverse-image {
+    width: 250px;
+    height: 250px;
+    margin-bottom: 10px;
+}
+
+.contact {
+    padding: 50px 20px;
+    background-color: #0098c2;
+    text-align: center;
+    color: #333;
+}
+
+.contact form {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.contact input[type="text"],
+.contact input[type="email"],
+.contact textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    background-color: #f9f9f9;
+}
+
+.contact textarea {
+    resize: none;
+    height: 150px;
+}
+
+.contact button[type="submit"] {
+    background-color: #00a8d5;
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.contact button[type="submit"]:hover {
+    background-color: #008bb2;
+}
+
+.india-map img {
+    max-width: 100%;
+    height: auto;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Header Styles */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-left: auto;
+  }
+  
+  /* Diverse Solutions Section */
+  .diverse-solutions-section {
+    padding: 50px 20px;
+    text-align: center;
+  }
+  
+  .center-heading {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  .center-text {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .diverse-solutions-content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+  }
+  
+  .diverse-solutions-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    text-align: left;
+  }
+  
+  .diverse-solutions-item.reverse-order {
+    flex-direction: row-reverse;
+  }
+  
+  .diverse-image {
+    width: 45%;
+    height: auto;
+    margin-bottom: 15px;
+  }
+  
+  .diverse-solutions-item p {
+    width: 45%;
+  }
+  
+  /* Footer Styles */
+  footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+  }
+  

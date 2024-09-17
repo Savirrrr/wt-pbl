@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Task - To-Do List</title>
+  <link rel="stylesheet" href="task.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Add Task</h1>
+    
+    <div class="inputContainer">
+      <input type="text" id="new-task" placeholder="Add a new task...">
+      <input type="date" id="task-date">
+      <select id="task-priority">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+      <button id="add-task-button">Add Task</button>
+    </div>
+    
+    <button id="logout-button">Logout</button>
+  </div>
+
+  <script>
+    // Ensure user is logged in, if not, redirect to login page
+    // window.onload = function() {
+    //   const username = localStorage.getItem('username');
+    //   if (!username) {
+    //     window.location.href = 'index.html'; // Redirect to login page
+    //   }
+    // };
+
+    // Function to add a task and redirect
+    function addTaskAndRedirect() {
+      const taskInput = document.getElementById('new-task');
+      const taskValue = taskInput.value.trim();
+      const taskDate = document.getElementById('task-date').value;
+      const taskPriority = document.getElementById('task-priority').value;
+
+      if (taskValue === '') {
+        alert('Please enter a task.');
+        return;
+      }
+
+      // Save task to local storage
+      saveTaskToLocalStorage(taskValue, taskPriority, taskDate);
+
+      // Redirect to tasks display page
+      window.location.href = 'tasks-view.html';
+    }
+
+    // Save task to local storage
+    function saveTaskToLocalStorage(taskValue, taskPriority, taskDate) {
+      const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      tasks.push({ text: taskValue, priority: taskPriority, dueDate: taskDate });
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    // Logout functionality
+    document.getElementById('logout-button').addEventListener('click', function() {
+      localStorage.removeItem('username'); // Clear the username
+      window.location.href = 'home.html'; // Redirect to login page
+    });
+
+    // Adding the task when button is clicked
+    document.getElementById('add-task-button').addEventListener('click', addTaskAndRedirect);
+
+    // Adding the task when Enter is pressed
+    document.getElementById('new-task').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        addTaskAndRedirect();
+      }
+    });
+  </script>
+</body>
+</html>
